@@ -1,23 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import Form from "./components/Form";
+import Logo from "./components/Logo";
+import PackingList from "./components/PackingList";
+import Stats from "./components/Stats";
+import { initialItems } from "./data/data";
 
 function App() {
+  const [items, setItems] = useState(initialItems);
+
+  const saveNewItem = (item) => {
+    setItems([...items, item]);
+  };
+
+  const doPacked = (id) => {
+    const newItems = items.map((item) => {
+      if (item.id === id) {
+        return { ...item, packed: true };
+      }
+      return item;
+    });
+    setItems(newItems);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <Logo />
+      <Form save={saveNewItem} />
+      <PackingList done={doPacked} items={items} />
+      <Stats items={items} />
     </div>
   );
 }
