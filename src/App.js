@@ -22,12 +22,15 @@ function App() {
     });
     setItems(newItems);
   };
+  const deleteItem = (id) => {
+    setItems(items.filter((item) => item.id !== id));
+  };
 
   return (
     <div className="app">
       <Logo />
       <Form save={saveNewItem} />
-      <PackingList done={doPacked} items={items} />
+      <PackingList deleteItem={deleteItem} done={doPacked} items={items} />
       <Stats items={items} />
     </div>
   );

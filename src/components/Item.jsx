@@ -1,14 +1,17 @@
-const Item = ({ description, quantity, id, packed, done }) => {
+const Item = ({ description, quantity, id, packed, done, deleteItem }) => {
   const hadnleDoneItem = (id) => {
     done(id);
   };
 
   return (
     <li>
-      <span style={packed ? { textDecoration: "line-through" } : {}}>
+      <span
+        onClick={() => hadnleDoneItem(id)}
+        style={packed ? { textDecoration: "line-through" } : {}}
+      >
         {quantity} {description}
       </span>
-      <button onClick={() => hadnleDoneItem(id)}>❌&times;</button>
+      <button onClick={() => deleteItem(id)}>❌&times;</button>
     </li>
   );
 };
