@@ -9,6 +9,9 @@ import { initialItems } from "./data/data";
 function App() {
   const [items, setItems] = useState(initialItems);
 
+  const deleteAll = () => {
+    setItems([]);
+  };
   const saveNewItem = (item) => {
     setItems([...items, item]);
   };
@@ -16,7 +19,7 @@ function App() {
   const doPacked = (id) => {
     const newItems = items.map((item) => {
       if (item.id === id) {
-        return { ...item, packed: true };
+        return { ...item, packed: !item.packed };
       }
       return item;
     });
@@ -30,7 +33,13 @@ function App() {
     <div className="app">
       <Logo />
       <Form save={saveNewItem} />
-      <PackingList deleteItem={deleteItem} done={doPacked} items={items} />
+      <PackingList
+        deleteItem={deleteItem}
+        done={doPacked}
+        items={items}
+        handlerSetItems={() => setItems}
+        deleteAll={deleteAll}
+      />
       <Stats items={items} />
     </div>
   );
